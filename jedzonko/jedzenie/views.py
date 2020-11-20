@@ -30,3 +30,21 @@ class WlascicielView( mixins.CreateModelMixin,
                       viewsets.GenericViewSet):
     queryset = Wlasciciel.objects.all()
     serializer_class = WlascicielSerializer
+
+class AdresView( mixins.CreateModelMixin,
+                      mixins.ListModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
+    queryset = Adres.objects.all()
+    serializer_class = AdresSerializer
+
+class KlientlView( mixins.CreateModelMixin,
+                      mixins.ListModelMixin,
+                      mixins.DestroyModelMixin,
+                      mixins.UpdateModelMixin,
+                      mixins.RetrieveModelMixin,
+                      viewsets.GenericViewSet):
+    queryset = Klient.objects.all()
+    serializer_class = KlientSerializer    
