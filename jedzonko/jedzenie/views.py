@@ -1,7 +1,18 @@
 from rest_framework import mixins
 from rest_framework import viewsets
-from .models import Pozycja, Restauracja, Adres, Menu, TypRestauracji, Klient, Zamowienie, Wlasciciel, OpiniaORestauracji
-from .serializers import PozycjaSerializer, RestauracjaSerializer, AdresSerializer, MenuSerializer, TypRestauracjiSerializer, KlientSerializer, ZamowienieSerializer, WlascicielSerializer, OpiniaORestauracjiSerializer
+from .models import (Pozycja,
+                     Restauracja,
+                     Adres,
+                     Menu,
+                     TypRestauracji,
+                     Klient,
+                     Zamowienie,
+                     Wlasciciel,
+                     OpiniaORestauracji)
+from .serializers import PozycjaSerializer, \
+    RestauracjaSerializer, AdresSerializer, \
+    MenuSerializer, TypRestauracjiSerializer, KlientSerializer, \
+    ZamowienieSerializer, WlascicielSerializer, OpiniaORestauracjiSerializer
 
 
 class RestauracjaView(mixins.CreateModelMixin,
@@ -55,19 +66,20 @@ class KlientlView(mixins.CreateModelMixin,
 
 
 class PozycjaView(mixins.CreateModelMixin,
-                   mixins.ListModelMixin,
-                   mixins.DestroyModelMixin,
-                   mixins.UpdateModelMixin,
-                   mixins.RetrieveModelMixin,
-                   viewsets.GenericViewSet):
+                  mixins.ListModelMixin,
+                  mixins.DestroyModelMixin,
+                  mixins.UpdateModelMixin,
+                  mixins.RetrieveModelMixin,
+                  viewsets.GenericViewSet):
     queryset = Pozycja.objects.all()
     serializer_class = PozycjaSerializer
 
+
 class MenuView(mixins.CreateModelMixin,
-                    mixins.ListModelMixin,
-                    mixins.DestroyModelMixin,
-                    mixins.UpdateModelMixin,
-                    mixins.RetrieveModelMixin,
-                    viewsets.GenericViewSet):
+               mixins.ListModelMixin,
+               mixins.DestroyModelMixin,
+               mixins.UpdateModelMixin,
+               mixins.RetrieveModelMixin,
+               viewsets.GenericViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
