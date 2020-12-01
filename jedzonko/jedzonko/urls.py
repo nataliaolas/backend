@@ -15,16 +15,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from rest_framework import serializers,routers
-from jedzenie.views import (RestauracjaView,TypRestauracjiView,WlascicielView, MenuView, PozycjaView)
+from rest_framework import routers, serializers
+from jedzenie.views import RestauracjaView,TypRestauracjiView,WlascicielView,AdresView,KlientlView,PozycjaView,MenuView,OpiniaORestauracjiView,ZamowienieView
 
-#tutaj deklarujemy widoki, które utworzyliśmy 
+
 router = routers.DefaultRouter()
-router.register(r'restauracja',RestauracjaView)
-router.register(r'typrestauracji',TypRestauracjiView)
-router.register(r'wlasciciciel',WlascicielView)
-router.register(r'pozycja',PozycjaView)
-router.register(r'menu',MenuView)
+router.register(r'restauracja', RestauracjaView)
+router.register(r'typrestauracji', TypRestauracjiView)
+router.register(r'wlasciciel', WlascicielView)
+router.register(r'adres', AdresView)
+router.register(r'klient', KlientlView)
+router.register(r'pozycja', PozycjaView)
+router.register(r'menu', MenuView)
+router.register(r'opiniaorestauracji', OpiniaORestauracjiView)
+router.register(r'zamowienie', ZamowienieView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

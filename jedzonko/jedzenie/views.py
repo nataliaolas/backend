@@ -13,7 +13,8 @@ from .serializers import PozycjaSerializer, \
     RestauracjaSerializer, AdresSerializer, \
     MenuSerializer, TypRestauracjiSerializer, KlientSerializer, \
     ZamowienieSerializer, WlascicielSerializer, OpiniaORestauracjiSerializer
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 
 class RestauracjaView(mixins.CreateModelMixin,
                       mixins.ListModelMixin,
@@ -33,7 +34,9 @@ class TypRestauracjiView(mixins.CreateModelMixin,
                          viewsets.GenericViewSet):
     queryset = TypRestauracji.objects.all()
     serializer_class = TypRestauracjiSerializer
-
+    filter_backends = [filters.OrderingFilter]
+    ordering_fields = ['nazwa']
+    ordering = ['nazwa']
 
 class WlascicielView(mixins.CreateModelMixin,
                      mixins.ListModelMixin,
@@ -53,7 +56,8 @@ class AdresView(mixins.CreateModelMixin,
                 viewsets.GenericViewSet):
     queryset = Adres.objects.all()
     serializer_class = AdresSerializer
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['miasto']
 
 class KlientlView(mixins.CreateModelMixin,
                   mixins.ListModelMixin,
