@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils.translation import gettext_lazy as _
 
 class Pozycja(models.Model):
     cena = models.FloatField()
@@ -10,7 +11,12 @@ class Pozycja(models.Model):
     def __str__(self):
         return self.nazwa +" "+ str(self.cena) +" " + self.sklad
 
+def upload_to(instance,filename):
+    return 'posts/{filename}'.format(filename=filename)
+
 class Restauracja(models.Model):
+    zdjecie = models.ImageField(_("Image"),upload_to="restauracje",default=False)
+    nazwa = models.CharField(max_length=30,default=False)
     opis = models.TextField(null=True)
     adresy = models.ManyToManyField('Adres')
     wlasciciel = models.ForeignKey('Wlasciciel', on_delete=models.CASCADE, null=True)

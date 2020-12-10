@@ -94,7 +94,7 @@ class OpiniaORestauracjiView(mixins.CreateModelMixin,
                mixins.UpdateModelMixin,
                mixins.RetrieveModelMixin,
                viewsets.GenericViewSet):
-    queryset = Menu.objects.all()
+    queryset = OpiniaORestauracji.objects.all()
     serializer_class = OpiniaORestauracjiSerializer
 
 class ZamowienieView(mixins.CreateModelMixin,
@@ -103,5 +103,5 @@ class ZamowienieView(mixins.CreateModelMixin,
                mixins.UpdateModelMixin,
                mixins.RetrieveModelMixin,
                viewsets.GenericViewSet):
-    queryset = Menu.objects.all()
+    queryset = Zamowienie.objects.all()
     serializer_class = ZamowienieSerializer    

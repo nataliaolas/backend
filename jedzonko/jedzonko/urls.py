@@ -27,7 +27,7 @@ router.register(r'adres', AdresView)
 router.register(r'klient', KlientlView)
 router.register(r'pozycja', PozycjaView)
 router.register(r'menu', MenuView)
-router.register(r'opiniaorestauracji', OpiniaORestauracjiView)
+router.register(r'opiniaorestauracji',OpiniaORestauracjiView)
 router.register(r'zamowienie', ZamowienieView)
 
 urlpatterns = [
