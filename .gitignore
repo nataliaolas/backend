@@ -13,4 +13,5 @@ venv/
 
 #dbsqlite
 *.sqlite3
-media/
+db.sqlite3
+jedzonko/db.sqlite3
