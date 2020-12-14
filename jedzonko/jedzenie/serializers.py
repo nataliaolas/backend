@@ -22,9 +22,6 @@ class MenuSerializer(serializers.ModelSerializer):
         model = Menu
         fields = ['restauracja', 'pozycje']
 
-        # def get_positions(self, instance):
-        #     return instance.position__set.all()
-
 
 
 class TypRestauracjiSerializer(serializers.ModelSerializer):
