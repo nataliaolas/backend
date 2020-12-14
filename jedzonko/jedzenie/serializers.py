@@ -17,9 +17,15 @@ class AdresSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MenuSerializer(serializers.ModelSerializer):
+    pozycje = serializers.StringRelatedField(many=True, read_only=True)
     class Meta:
         model = Menu
-        fields = '__all__'
+        fields = ['restauracja', 'pozycje']
+
+        # def get_positions(self, instance):
+        #     return instance.position__set.all()
+
+
 
 class TypRestauracjiSerializer(serializers.ModelSerializer):
     class Meta:

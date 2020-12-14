@@ -6,7 +6,7 @@ class Pozycja(models.Model):
     cena = models.FloatField()
     nazwa = models.CharField(max_length=50)
     sklad = models.TextField()
-    menu = models.ForeignKey('Menu', on_delete=models.CASCADE, null=True)
+    menu = models.ForeignKey('Menu',related_name='pozycje', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return self.nazwa +" "+ str(self.cena) +" " + self.sklad
