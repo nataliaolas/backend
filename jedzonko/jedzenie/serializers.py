@@ -17,7 +17,7 @@ class AdresSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class MenuSerializer(serializers.ModelSerializer):
-    pozycje = serializers.StringRelatedField(many=True, read_only=True)
+    pozycje = PozycjaSerializer(many=True, read_only=True)
     class Meta:
         model = Menu
         fields = ['restauracja', 'pozycje']

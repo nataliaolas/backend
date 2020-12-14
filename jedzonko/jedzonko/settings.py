@@ -50,6 +50,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'jedzonko.middleware.cors.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'jedzonko.urls'
@@ -130,10 +131,9 @@ REST_FRAMEWORK = {
 }
 
 MIDDLEWARE_CLASSES = (
-    'corsheaders.middleware.CorsMiddleware',
+    #'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'app.CorsMiddleware',
 )
 
 MEDIA_ROOT =  os.path.join(BASE_DIR, 'media') 
