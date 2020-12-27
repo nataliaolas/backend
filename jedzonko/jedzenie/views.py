@@ -96,6 +96,8 @@ class OpiniaORestauracjiView(mixins.CreateModelMixin,
                viewsets.GenericViewSet):
     queryset = OpiniaORestauracji.objects.all()
     serializer_class = OpiniaORestauracjiSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['restauracja']
 
 class ZamowienieView(mixins.CreateModelMixin,
                mixins.ListModelMixin,
