@@ -21,6 +21,16 @@ class Restauracja(models.Model):
     adresy = models.ManyToManyField('Adres')
     wlasciciel = models.ForeignKey('Wlasciciel', on_delete=models.CASCADE, null=True)
 
+    def get_srednia_z_opinii(self):
+        opinie = self.opinie.all()
+        srednia_z_opinii = 0
+        if opinie:
+            suma_opinii = 0
+            for opinia in opinie:
+                suma_opinii += opinia.zadowolenie_klienta
+            srednia_z_opinii = suma_opinii/opinie.count()
+        return srednia_z_opinii
+
 
 class Adres(models.Model):
     miasto = models.CharField(max_length=50)
@@ -57,4 +67,4 @@ class Wlasciciel(models.Model):
 class OpiniaORestauracji(models.Model):
     opis = models.TextField()
     zadowolenie_klienta = models.IntegerField()
-    restauracja = models.ForeignKey(Restauracja, on_delete=models.CASCADE, null=True)
+    restauracja = models.ForeignKey(Restauracja, on_delete=models.CASCADE, null=True, related_name="opinie")

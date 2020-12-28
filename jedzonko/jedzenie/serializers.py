@@ -7,9 +7,13 @@ class PozycjaSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 class RestauracjaSerializer(serializers.ModelSerializer):
+    srednia_opinia_o_restauracji = serializers.SerializerMethodField()
     class Meta:
         model = Restauracja 
         fields ='__all__'
+
+    def get_srednia_opinia_o_restauracji(self, obj):
+        return obj.get_srednia_z_opinii()
 
 class AdresSerializer(serializers.ModelSerializer):
     class Meta:
