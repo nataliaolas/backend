@@ -24,7 +24,8 @@ class RestauracjaView(mixins.CreateModelMixin,
                       viewsets.GenericViewSet):
     queryset = Restauracja.objects.all()
     serializer_class = RestauracjaSerializer
-
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['nazwa']
 
 class TypRestauracjiView(mixins.CreateModelMixin,
                          mixins.ListModelMixin,
@@ -34,9 +35,8 @@ class TypRestauracjiView(mixins.CreateModelMixin,
                          viewsets.GenericViewSet):
     queryset = TypRestauracji.objects.all()
     serializer_class = TypRestauracjiSerializer
-    filter_backends = [filters.OrderingFilter]
-    ordering_fields = ['nazwa']
-    ordering = ['nazwa']
+    filter_backends = [DjangoFilterBackend]
+    filter_fields = ['nazwa']
 
 class WlascicielView(mixins.CreateModelMixin,
                      mixins.ListModelMixin,
