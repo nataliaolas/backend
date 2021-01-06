@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 class Pozycja(models.Model):
     cena = models.FloatField()
-    nazwa = models.CharField(max_length=50)
+    nazwadania = models.CharField(max_length=50)
     sklad = models.TextField()
     menu = models.ForeignKey('Menu',related_name='pozycje', on_delete=models.CASCADE, null=True)
 
@@ -20,6 +20,7 @@ class Restauracja(models.Model):
     opis = models.TextField(null=True)
     adresy = models.ManyToManyField('Adres')
     wlasciciel = models.ForeignKey('Wlasciciel', on_delete=models.CASCADE, null=True)
+    typ_restauracji = models.ForeignKey("TypRestauracji", on_delete=models.SET_NULL, null=True)
 
     def get_srednia_z_opinii(self):
         opinie = self.opinie.all()
@@ -36,7 +37,7 @@ class Adres(models.Model):
     miasto = models.CharField(max_length=50)
     ulica = models.CharField(max_length=50)
     nr_budynku = models.IntegerField()
-    nr_mieszkania= models.IntegerField()
+    nr_mieszkania= models.IntegerField(blank=True,null=True)
 
 
 class Menu(models.Model):
@@ -45,6 +46,9 @@ class Menu(models.Model):
 
 class TypRestauracji(models.Model):
     nazwa = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.nazwa
 
 
 class Klient(models.Model):
@@ -63,8 +67,17 @@ class Zamowienie(models.Model):
 class Wlasciciel(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.user.username
+
 
 class OpiniaORestauracji(models.Model):
     opis = models.TextField()
     zadowolenie_klienta = models.IntegerField()
     restauracja = models.ForeignKey(Restauracja, on_delete=models.CASCADE, null=True, related_name="opinie")
+
+class Platnosc(models.Model):
+    forma_platnosci = models.BooleanField(blank=True,null=True)
+    nr_karty = models.CharField(max_length=40)
+    termin_karty = models.CharField(max_length=40) 
+    nr_seryjny = models.CharField(max_length=40)

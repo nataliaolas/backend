@@ -16,7 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers, serializers
-from jedzenie.views import RestauracjaView,TypRestauracjiView,WlascicielView,AdresView,KlientlView,PozycjaView,MenuView,OpiniaORestauracjiView,ZamowienieView
+from jedzenie.views import RestauracjaView,TypRestauracjiView,WlascicielView,AdresView,KlientlView,PozycjaView,MenuView,OpiniaORestauracjiView,ZamowienieView,PlatnoscView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -30,6 +30,7 @@ router.register(r'pozycja', PozycjaView)
 router.register(r'menu', MenuView)
 router.register(r'opiniaorestauracji',OpiniaORestauracjiView)
 router.register(r'zamowienie', ZamowienieView)
+router.register(r'platnosc',PlatnoscView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

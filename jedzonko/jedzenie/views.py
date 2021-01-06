@@ -8,14 +8,30 @@ from .models import (Pozycja,
                      Klient,
                      Zamowienie,
                      Wlasciciel,
-                     OpiniaORestauracji)
+                     OpiniaORestauracji,
+                     Platnosc)
 from .serializers import PozycjaSerializer, \
     RestauracjaSerializer, AdresSerializer, \
     MenuSerializer, TypRestauracjiSerializer, KlientSerializer, \
-    ZamowienieSerializer, WlascicielSerializer, OpiniaORestauracjiSerializer
+    ZamowienieSerializer, WlascicielSerializer, OpiniaORestauracjiSerializer,PlatnoscSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+class ExampleView(APIView):
+    authentication_classes = [SessionAuthentication, BasicAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, format=None):
+        content = {
+            'user': unicode(request.user),  # `django.contrib.auth.User` instance.
+            'auth': unicode(request.auth),  # None
+        }
+        return Response(content)
+        
 class RestauracjaView(mixins.CreateModelMixin,
                       mixins.ListModelMixin,
                       mixins.DestroyModelMixin,
@@ -25,7 +41,7 @@ class RestauracjaView(mixins.CreateModelMixin,
     queryset = Restauracja.objects.all()
     serializer_class = RestauracjaSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['nazwa']
+    filterset_fields = ['nazwa', 'typ_restauracji']
 
 class TypRestauracjiView(mixins.CreateModelMixin,
                          mixins.ListModelMixin,
@@ -107,3 +123,13 @@ class ZamowienieView(mixins.CreateModelMixin,
                viewsets.GenericViewSet):
     queryset = Zamowienie.objects.all()
     serializer_class = ZamowienieSerializer    
+
+
+class PlatnoscView(mixins.CreateModelMixin,
+               mixins.ListModelMixin,
+               mixins.DestroyModelMixin,
+               mixins.UpdateModelMixin,
+               mixins.RetrieveModelMixin,
+               viewsets.GenericViewSet):
+    queryset = Platnosc.objects.all()
+    serializer_class = PlatnoscSerializer

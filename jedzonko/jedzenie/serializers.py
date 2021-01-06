@@ -1,10 +1,21 @@
 from rest_framework import serializers
-from jedzenie.models import Pozycja,Restauracja,Adres,Menu,TypRestauracji,Klient,Zamowienie,Wlasciciel, OpiniaORestauracji
+from jedzenie.models import Pozycja,Restauracja,Adres,Menu,TypRestauracji,Klient,Zamowienie,Wlasciciel, OpiniaORestauracji,Platnosc
 
 class PozycjaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pozycja
         fields='__all__'
+
+class AdresSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Adres
+        fields = '__all__'
+
+class TypRestauracjiSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TypRestauracji
+        fields = '__all__'
+
 
 class RestauracjaSerializer(serializers.ModelSerializer):
     srednia_opinia_o_restauracji = serializers.SerializerMethodField()
@@ -15,10 +26,6 @@ class RestauracjaSerializer(serializers.ModelSerializer):
     def get_srednia_opinia_o_restauracji(self, obj):
         return obj.get_srednia_z_opinii()
 
-class AdresSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Adres
-        fields = '__all__'
 
 class MenuSerializer(serializers.ModelSerializer):
     pozycje = PozycjaSerializer(many=True, read_only=True)
@@ -27,16 +34,25 @@ class MenuSerializer(serializers.ModelSerializer):
         fields = ['restauracja', 'pozycje']
 
 
-
-class TypRestauracjiSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TypRestauracji
-        fields = '__all__'
-
 class KlientSerializer(serializers.ModelSerializer):
+    adres = AdresSerializer(many=False)
     class Meta:
         model = Klient
         fields = '__all__'
+
+    def create(self, validated_data):
+        ordered_dict = validated_data['adres']
+        new_adres = Adres()
+        new_adres.miasto = ordered_dict['miasto']
+        new_adres.ulica = ordered_dict['ulica']
+        new_adres.nr_budynku = ordered_dict['nr_budynku']
+        new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
+        validated_data['adres'] = new_adres
+        new_adres.save()
+        print("validated_data: ", validated_data)
+        print("*****\n\n\n*************\n\n\n\n")
+        klient = Klient.objects.create(**validated_data)
+        return klient
 
 class ZamowienieSerializer(serializers.ModelSerializer):
     class Meta:
@@ -51,4 +67,9 @@ class WlascicielSerializer(serializers.ModelSerializer):
 class OpiniaORestauracjiSerializer(serializers.ModelSerializer):
     class Meta:
         model = OpiniaORestauracji
+        fields = '__all__'
+
+class PlatnoscSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Platnosc
         fields = '__all__'
