@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 from jedzenie.models import Pozycja,Restauracja,Adres,Menu,TypRestauracji,Klient,Zamowienie,Wlasciciel, OpiniaORestauracji,Platnosc
 
@@ -33,7 +34,10 @@ class RestauracjaSerializer(serializers.ModelSerializer):
         new_adres.miasto = ordered_dict['miasto']
         new_adres.ulica = ordered_dict['ulica']
         new_adres.nr_budynku = ordered_dict['nr_budynku']
-        new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
+        try:
+            new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
+        except:
+            pass
         validated_data['adres'] = new_adres
         new_adres.save()
 
@@ -87,3 +91,24 @@ class PlatnoscSerializer(serializers.ModelSerializer):
     class Meta:
         model = Platnosc
         fields = '__all__'
+
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email')
+    
+class RegisterSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'email', 'password')
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User()
+        user.username = validated_data['username']
+        user.email = validated_data['email']
+        user.password = validated_data['password']
+        user.save()
+        return user
