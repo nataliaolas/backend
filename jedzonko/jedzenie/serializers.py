@@ -19,12 +19,26 @@ class TypRestauracjiSerializer(serializers.ModelSerializer):
 
 class RestauracjaSerializer(serializers.ModelSerializer):
     srednia_opinia_o_restauracji = serializers.SerializerMethodField()
+    adresy = AdresSerializer(many=True)
     class Meta:
         model = Restauracja 
         fields ='__all__'
 
     def get_srednia_opinia_o_restauracji(self, obj):
         return obj.get_srednia_z_opinii()
+
+    def create(self, validated_data):
+        ordered_dict = validated_data['adresy']
+        new_adres = Adres()
+        new_adres.miasto = ordered_dict['miasto']
+        new_adres.ulica = ordered_dict['ulica']
+        new_adres.nr_budynku = ordered_dict['nr_budynku']
+        new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
+        validated_data['adres'] = new_adres
+        new_adres.save()
+
+        restauracja = Restauracja.objects.create(**validated_data)
+        return restauracja
 
 
 class MenuSerializer(serializers.ModelSerializer):
