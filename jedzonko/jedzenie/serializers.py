@@ -19,7 +19,7 @@ class TypRestauracjiSerializer(serializers.ModelSerializer):
 
 class RestauracjaSerializer(serializers.ModelSerializer):
     srednia_opinia_o_restauracji = serializers.SerializerMethodField()
-    adresy = AdresSerializer(many=True)
+    adresy = AdresSerializer(many=False)
     class Meta:
         model = Restauracja 
         fields ='__all__'

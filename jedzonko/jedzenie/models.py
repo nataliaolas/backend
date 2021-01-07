@@ -18,7 +18,7 @@ class Restauracja(models.Model):
     zdjecie = models.ImageField(_("Image"),upload_to="restauracje",default=False)
     nazwa = models.CharField(max_length=30,default=False)
     opis = models.TextField(null=True)
-    adresy = models.ManyToManyField('Adres')
+    adresy = models.ForeignKey('Adres', on_delete=models.SET_NULL, null=True)
     wlasciciel = models.ForeignKey('Wlasciciel', on_delete=models.CASCADE, null=True)
     typ_restauracji = models.ForeignKey("TypRestauracji", on_delete=models.SET_NULL, null=True)
 
