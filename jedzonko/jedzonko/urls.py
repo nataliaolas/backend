@@ -13,12 +13,14 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from jedzenie.api import LoginAPI, RegisterAPI, Logout
 from django.contrib import admin
 from django.urls import path,include
 from rest_framework import routers, serializers
 from jedzenie.views import RestauracjaView,TypRestauracjiView,WlascicielView,AdresView,KlientlView,PozycjaView,MenuView,OpiniaORestauracjiView,ZamowienieView,PlatnoscView
 from django.conf import settings
 from django.conf.urls.static import static
+from knox import views as knox_views
 
 router = routers.DefaultRouter()
 router.register(r'restauracja', RestauracjaView)
@@ -35,4 +37,9 @@ router.register(r'platnosc',PlatnoscView)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('auth/', include('knox.urls')),
+    # path('api-token-auth/', obtain_auth_token, name='api_auth_token'),
+    path('auth/register', RegisterAPI.as_view()),
+    path('auth/login', LoginAPI.as_view()),
+    path('auth/logout', Logout.as_view()),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
