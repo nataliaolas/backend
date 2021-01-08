@@ -41,9 +41,9 @@ class RestauracjaSerializer(serializers.ModelSerializer):
             new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
         except:
             pass
-        validated_data['adres'] = new_adres
+        validated_data['adresy'] = new_adres
         new_adres.save()
-
+        print("ordered",ordered_dict)
         restauracja = Restauracja.objects.create(**validated_data)
         return restauracja
 
@@ -76,10 +76,22 @@ class KlientSerializer(serializers.ModelSerializer):
         return klient
 
 class ZamowienieSerializer(serializers.ModelSerializer):
+    # pozycje = PozycjaSerializer(many=True,read_only=True)
     class Meta:
         model = Zamowienie
         fields = '__all__'
 
+    # def create(self, validated_data):
+    #     ordered_dict = validated_data['pozycje']
+    #     new_adres = Pozycja()
+    #     new_adres.nazwadania = ordered_dict['nazwadania']
+    #     new_adres.sklad = ordered_dict['sklad']
+    #     validated_data['pozycje'] = new_adres
+    #     new_adres.save()
+    #     print("ordered",ordered_dict)
+    #     zamowienie = Zamowienie.objects.create(**validated_data)
+    #     return zamowienie
+        
 class WlascicielSerializer(serializers.ModelSerializer):
     class Meta:
         model = Wlasciciel
