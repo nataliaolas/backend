@@ -38,9 +38,9 @@ class RestauracjaSerializer(serializers.ModelSerializer):
             new_adres.nr_mieszkania = ordered_dict['nr_mieszkania']
         except:
             pass
-        validated_data['adres'] = new_adres
+        validated_data['adresy'] = new_adres
         new_adres.save()
-
+        print("ordered",ordered_dict)
         restauracja = Restauracja.objects.create(**validated_data)
         return restauracja
 

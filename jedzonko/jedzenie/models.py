@@ -9,16 +9,22 @@ class Pozycja(models.Model):
     menu = models.ForeignKey('Menu',related_name='pozycje', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
-        return self.nazwa +" "+ str(self.cena) +" " + self.sklad
+        return self.nazwadania +" "+ str(self.cena) +" " + self.sklad
 
 def upload_to(instance,filename):
     return 'posts/{filename}'.format(filename=filename)
+
+class Adres(models.Model):
+    miasto = models.CharField(max_length=50)
+    ulica = models.CharField(max_length=50)
+    nr_budynku = models.IntegerField()
+    nr_mieszkania= models.IntegerField(blank=True,null=True)
 
 class Restauracja(models.Model):
     zdjecie = models.ImageField(_("Image"),upload_to="restauracje",default=False)
     nazwa = models.CharField(max_length=30,default=False)
     opis = models.TextField(null=True)
-    adresy = models.ForeignKey('Adres', on_delete=models.SET_NULL, null=True)
+    adresy = models.ForeignKey(Adres, on_delete=models.SET_NULL, null=True)
     wlasciciel = models.ForeignKey('Wlasciciel', on_delete=models.CASCADE, null=True)
     typ_restauracji = models.ForeignKey("TypRestauracji", on_delete=models.SET_NULL, null=True)
 
@@ -33,11 +39,7 @@ class Restauracja(models.Model):
         return srednia_z_opinii
 
 
-class Adres(models.Model):
-    miasto = models.CharField(max_length=50)
-    ulica = models.CharField(max_length=50)
-    nr_budynku = models.IntegerField()
-    nr_mieszkania= models.IntegerField(blank=True,null=True)
+
 
 
 class Menu(models.Model):
