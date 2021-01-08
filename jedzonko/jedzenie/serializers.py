@@ -76,21 +76,21 @@ class KlientSerializer(serializers.ModelSerializer):
         return klient
 
 class ZamowienieSerializer(serializers.ModelSerializer):
-    # pozycje = PozycjaSerializer(many=True,read_only=True)
+    pozycje = PozycjaSerializer(many=True,read_only=True)
     class Meta:
         model = Zamowienie
         fields = '__all__'
 
-    # def create(self, validated_data):
-    #     ordered_dict = validated_data['pozycje']
-    #     new_adres = Pozycja()
-    #     new_adres.nazwadania = ordered_dict['nazwadania']
-    #     new_adres.sklad = ordered_dict['sklad']
-    #     validated_data['pozycje'] = new_adres
-    #     new_adres.save()
-    #     print("ordered",ordered_dict)
-    #     zamowienie = Zamowienie.objects.create(**validated_data)
-    #     return zamowienie
+    def create(self, validated_data):
+        ordered_dict = validated_data['pozycje']
+        new_adres = Pozycja()
+        new_adres.nazwadania = ordered_dict['nazwadania']
+        new_adres.sklad = ordered_dict['sklad']
+        validated_data['pozycje'] = new_adres
+        new_adres.save()
+        print("ordered",ordered_dict)
+        zamowienie = Zamowienie.objects.create(**validated_data)
+        return zamowienie
         
 class WlascicielSerializer(serializers.ModelSerializer):
     class Meta:
