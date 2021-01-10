@@ -103,6 +103,8 @@ class MenuView(mixins.CreateModelMixin,
                viewsets.GenericViewSet):
     queryset = Menu.objects.all()
     serializer_class = MenuSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['restauracja']
 
 class OpiniaORestauracjiView(mixins.CreateModelMixin,
                mixins.ListModelMixin,
