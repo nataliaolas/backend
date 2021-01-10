@@ -52,7 +52,9 @@ class MenuSerializer(serializers.ModelSerializer):
     pozycje = PozycjaSerializer(many=True, read_only=True)
     class Meta:
         model = Menu
-        fields = ['restauracja', 'pozycje']
+        fields = ['id','restauracja', 'pozycje']
+    
+
 
 
 class KlientSerializer(serializers.ModelSerializer):
