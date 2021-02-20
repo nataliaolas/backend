@@ -1,5 +1,5 @@
-#Jedzonko.pl back-end
+# Jedzonko.pl back-end
 
-##Technologies
+## Technologies
 * Python
 * Django-Rest-Framework 
